@@ -1,0 +1,26 @@
+<% if purchases.any? %>
+  <ul class="list-unstyled mt-2">
+    <% purchases.each do |purchase| %>
+      <li class="d-flex">
+        <img class="rounded me-2 mb-5" src="<%= gravatar_url(purchase.user, { size: 64 }) %>" alt="">
+        <div>
+          <div>
+            <%= link_to purchase.user.name, user_path(purchase.user), class: "text-decoration-none" %> <span class="text-muted">posted at <%= purchase.created_at %></span>
+          </div>
+          <div>
+            <p><%= purchase.item %></p>
+            <%# 以下ちゃんとリンクとして飛べるか？を後程確認 %>
+            <p><%= purchase.url %></p>
+          </div>
+          <div>
+            <% if current_user == purchase.user %>
+              <%= link_to "Delete", purchase, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+              <%= link_to "確認中", class: 'btn btn-danger btn-sm' %>
+            <% end %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  <%== pagy_bootstrap_nav(@pagy) %>
+<% end %>
