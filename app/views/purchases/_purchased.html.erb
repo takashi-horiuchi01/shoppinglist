@@ -1,8 +1,8 @@
-<% if purchases[1].any? %>
+<% if purchases.any? %>
   <ul class="list-unstyled mt-2">
-    <% purchases[1].each do |purchase| %>
+    <% purchases.each do |purchase| %>
       <li class="d-flex">
-        <% if current_user.family_name == purchase.user.family_name %>
+        <% if @user.family_name == purchase.user.family_name %>
           <% if purchase.status == '2' %>
             <img class="rounded me-2 mb-5" src="<%= gravatar_url(purchase.user, { size: 64 }) %>" alt="">
             <div>
@@ -11,10 +11,10 @@
               </div>
               <div>
                 <p><%= purchase.item %></p>
-                <p><%= link_to purchase.url %></p>
+                <p><a href="<%= purchase.url %>"><%= purchase.url %></p>
               </div>
               <div>
-                <%= link_to "戻す", purchase, method: :update, data: { confirm: "購入前に戻して良いでしょうか？"}, class: 'btn btn-success btn-sm' %>
+                <%= link_to "戻す", purchase, method: :patch, data: { confirm: "購入前に戻して良いでしょうか？"}, class: 'btn btn-success btn-sm' %>
               </div>
             </div>
           <% end %>
@@ -22,5 +22,5 @@
       </li>
     <% end %>
   </ul>
-  <%== pagy_bootstrap_nav(purchases[0]) %>
+  <%== pagy_bootstrap_nav(@pagy) %>
 <% end %>

@@ -11,6 +11,7 @@ class PurchasesController < ApplicationController
       @pagy, @purchases = pagy(current_user.purchases.order(id: :desc))
       flash.now[:danger] = '購入リストの登録に失敗しました。'
       render 'toppages/index'
+      # render :new
     end
   end
 
@@ -38,7 +39,7 @@ class PurchasesController < ApplicationController
       render 'toppages/index'
     end
   end
-
+  
   private
 
   def purchase_params

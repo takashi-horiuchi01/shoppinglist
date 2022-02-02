@@ -26,6 +26,23 @@ class UsersController < ApplicationController
     end
   end
 
+  def list
+    @user = User.find(current_user.id)
+    @pagy, @purchases = pagy(Purchase.order(id: :desc), items: 25)
+    # どちらのリンクでもカウント数をカウントできるように両方の関数を呼ぶ
+    count_purchases
+    count_purchased
+  end
+
+  def purchased
+    @user = User.find(current_user.id)
+    @pagy, @purchases = pagy(Purchase.order(id: :desc), items: 25)
+    # どちらのリンクでもカウント数をカウントできるように両方の関数を呼ぶ
+    count_purchases
+    count_purchased
+  end
+
+
   private
 
   def user_params

@@ -12,9 +12,6 @@ Rails.application.routes.draw do
       get :purchased
     end
   end
-  # メモ
-  # updateのリクエスト方式をpostからputchに変更できそうであればresourcesのupdateで処理する。そうでなければupdateは削除する
   resources :purchases, only: [:create, :destroy, :update]
-  post '/purchases/:id(.:format)' => "purchases#update"
 
 end
