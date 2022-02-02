@@ -11,7 +11,6 @@ class PurchasesController < ApplicationController
       @pagy, @purchases = pagy(current_user.purchases.order(id: :desc))
       flash.now[:danger] = '購入リストの登録に失敗しました。'
       render 'toppages/index'
-      # render :new
     end
   end
 
@@ -26,12 +25,14 @@ class PurchasesController < ApplicationController
     @purchase = Purchase.find(params[:id])
 
     # 更新ステータス処理の分岐
-    status_params
+    status_update
     
     # 更新処理
     if @purchase.save
       if @not_update_flag != '1'
         flash[:success] = '購入リストのステータスを更新しました。'
+      else
+        flash[:danger] = '当該ステータスを更新できるユーザーではありません'
       end
       redirect_back(fallback_location: root_path)
     else
@@ -48,41 +49,56 @@ class PurchasesController < ApplicationController
     params.require(:purchase).permit(:item, :url, :status)
   end
 
+  def status_update
+    if @purchase.status == '0'
+      # 承認時の自分以外チェック
+      other_user_check
+      if @not_update_flag!='1'
+        # status更新処理
+        @purchase.status = '1'
+      end
+
+    elsif @purchase.status == '1'
+      # 購入画面に遷移させられるのは自分の投稿のみ
+      own_user_check
+      if @not_update_flag!='1'
+        # status更新処理
+        @purchase.status = '2'
+      end
+      
+    elsif @purchase.status == '2'
+      # 購入画面から戻せるのは自分の投稿のみ
+      own_user_check
+      if @not_update_flag!='1'
+        # status更新処理
+        @purchase.status = '1'
+      end
+
+    else
+      # 何もしない
+    end
+  end
+
   def correct_user
     @purchase = current_user.purchases.find_by(id: params[:id])
     unless @purchase
       redirect_to root_url
     end
   end
-  
-  def other_user
+
+  # 登録ユーザーが他人かチェック
+  def other_user_check
     unless @purchase.user_id != current_user.id
       # 更新させない処理
       @not_update_flag = '1'
     end
   end
-  
-  def status_params
-    if @purchase.status == '0'
-      # 承認時の自分以外チェック
-      other_user
-      if @not_update_flag!='1'
-        # status更新処理
-        @purchase.status = '1'
-      end
-      p @purchase
-    elsif @purchase.status == '1'
-      # 購入画面移動にユーザーチェックはなし
 
-      # status更新処理
-      @purchase.status = '2'
-      
-    elsif @purchase.status == '2'
-      # status更新処理
-      @purchase.status = '1'
-
-    else
-      # 何もしない
+  # 登録ユーザーが自分かチェック
+  def own_user_check
+    unless @purchase.user_id == current_user.id
+      # 更新させない処理
+      @not_update_flag = '1'
     end
   end
   

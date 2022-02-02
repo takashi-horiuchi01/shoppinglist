@@ -11,7 +11,7 @@
               </div>
               <div>
                 <p><%= purchase.item %></p>
-                <p><a href="<%= purchase.url %>"><%= purchase.url %></p>
+                <p><a href="<%= purchase.url %>"><%= purchase.url %></a></p>
               </div>
               <div>
                 <%= link_to "Delete", purchase, method: :delete, data: { confirm: "リストから削除してよろしいでしょうか？" }, class: 'btn btn-danger btn-sm' %>
