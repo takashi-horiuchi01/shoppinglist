@@ -1,16 +1,18 @@
 <% if users.any? %>
+  <div>
+    <p><font size="7"><%= current_user.family_name %>  家のユーザ一覧</font></p>
+  </div>
   <ul class="list-unstyled">
     <% users.each do |user| %>
       <li class="mb-3 d-flex">
-        <img class="rounded me-2" src="<%= gravatar_url(user, { size: 64 }) %>" alt="">
-        <div>
+        <% if current_user.family_name == user.family_name %>
+          <img class="rounded me-2" src="<%= gravatar_url(user, { size: 64 }) %>" alt="">
           <div>
-            <%= user.name %>
+            <div>
+              <%= user.name %>
+            </div>
           </div>
-          <div>
-            <p><%= link_to 'View profile', user_path(user), class: "text-decoration-none" %></p>
-          </div>
-        </div>
+        <% end %>
       </li>
     <% end %>
   </ul>

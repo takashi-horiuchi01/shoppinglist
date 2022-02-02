@@ -1,0 +1,19 @@
+<div class="row">
+  <aside class="col-sm-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><%= current_user.name %></h3>
+      </div>
+      <div class="card-body">
+        <img class="rounded img-fluid" src="<%= gravatar_url(current_user, { size: 500 }) %>" alt="">
+      </div>
+    </div>
+  </aside>
+  <div class="col-sm-8">
+    <ul class="nav nav-tabs nav-justified mb-3">
+      <li class="nav-item"><a href="<%= list_user_path(current_user) %>" class="nav-link <%= 'active' if current_page?(list_user_path(current_user)) %>">List  <span class="badge bg-secondary"><%= count_purchases(current_user) %></span></a></li>
+      <li class="nav-item"><a href="<%= purchased_user_path(current_user) %>" class="nav-link <%= 'active' if current_page?(purchased_user_path(current_user)) %>">Purchased  <span class="badge bg-secondary"><%= count_purchased(current_user) %></span></a></li>
+    </ul>
+    <%= render 'purchases/purchased', purchases: all_item %>
+  </div>
+</div>

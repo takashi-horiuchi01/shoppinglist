@@ -11,9 +11,9 @@
   </aside>
   <div class="col-sm-8">
     <ul class="nav nav-tabs nav-justified mb-3">
-      <li class="nav-item"><a href="<%= user_path(@user) %>" class="nav-link <%= 'active' if current_page?(user_path(@user)) %>">List  <span class="badge bg-secondary"><%= @count_purchases %></span></a></li>
-      <li class="nav-item"><a href="#" class="nav-link">Purchased</a></li>
+      <li class="nav-item"><a href="<%= user_path(@user) %>" class="nav-link <%= 'active' if current_page?(user_path(@user)) %>">List  <span class="badge bg-secondary"><%= count_purchases(current_user) %></span></a></li>
+      <li class="nav-item"><a href="<%= purchased_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(purchased_user_path(@user)) %>">Purchased  <span class="badge bg-secondary"><%= count_purchased(current_user) %></span></a></li>
     </ul>
-    <%= render 'purchases/purchases', purchases: @purchases %>
+    <%= render 'purchases/purchases', purchases: all_item %>
   </div>
 </div>

@@ -5,7 +5,7 @@
         <div class="mb-3">
           商品名
           <%= f.text_area :item, class: 'form-control', rows: 1 %>
-          <%# 文字をカッコよく入れたい。そしてここには空行を入れたい %>
+          <p></p>
           URL
           <%= f.text_area :url, class: 'form-control', rows: 2 %>
         </div>
@@ -13,7 +13,7 @@
       <% end %>
     </aside>
     <div class="col-sm-8">
-      <%= render 'purchases/purchases', purchases: @purchases %>
+      <%= render 'purchases/purchases', purchases: all_item %>
     </div>
   </div>
 <% else %>

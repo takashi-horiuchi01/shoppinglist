@@ -7,8 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @pagy, @purchases = pagy(@user.purchases.order(id: :desc))
-    counts(@user)
+    @pagy, @purchases = pagy(Purchase.order(id: :desc))
   end
 
   def new
@@ -32,4 +31,5 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :family_name, :email, :password, :password_confirmation)
   end
+
 end

@@ -11,8 +11,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def counts(user)
-    @count_purchases = user.purchases.count
-  end
-
 end
