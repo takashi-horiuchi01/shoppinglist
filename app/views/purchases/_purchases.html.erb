@@ -14,7 +14,9 @@
                 <p><a href="<%= purchase.url %>"><%= purchase.url %></a></p>
               </div>
               <div>
-                <%= link_to "Delete", purchase, method: :delete, data: { confirm: "リストから削除してよろしいでしょうか？" }, class: 'btn btn-danger btn-sm' %>
+                <% if purchase.user == current_user %>
+                  <%= link_to "Delete", purchase, method: :delete, data: { confirm: "リストから削除してよろしいでしょうか？" }, class: 'btn btn-danger btn-sm' %>
+                <% end %>
                 <% if purchase.status == '0' %>
                   <%# toメンターへ：本当はここでフラグ情報なども追加で渡して何のボタン処理からのupdate指示か？まで対応したいがparamsへのデータの渡し方がわからない  %>
                   <%= link_to "確認中", purchase, method: :patch, data: { confirm: "購入に合意してよろしいですか?"}, class: 'btn btn-warning btn-sm' %>

@@ -8,7 +8,8 @@ class PurchasesController < ApplicationController
       flash[:success] = '新規の購入リストを登録しました。'
       redirect_to root_url
     else
-      @pagy, @purchases = pagy(current_user.purchases.order(id: :desc))
+      @pagy, @purchases = pagy(Purchase.order(id: :desc))
+      @user = User.find(current_user.id)
       flash.now[:danger] = '購入リストの登録に失敗しました。'
       render 'toppages/index'
     end

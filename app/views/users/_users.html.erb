@@ -1,6 +1,6 @@
 <% if users.any? %>
   <div>
-    <p><h1><%= current_user.family_name %>  家のユーザ一覧</h1></p>
+    <h1><%= current_user.family_name %>  家のユーザ一覧</h1>
   </div>
   <ul class="list-unstyled">
     <% users.each do |user| %>
