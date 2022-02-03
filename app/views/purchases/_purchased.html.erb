@@ -14,7 +14,11 @@
                 <p><a href="<%= purchase.url %>"><%= purchase.url %></a></p>
               </div>
               <div>
-                <%= link_to "戻す", purchase, method: :patch, data: { confirm: "購入前に戻して良いでしょうか？"}, class: 'btn btn-success btn-sm' %>
+                <% if purchase.user == current_user %>
+                  <%= link_to "戻す", purchase, method: :patch, data: { confirm: "購入前に戻して良いでしょうか？"}, class: 'btn btn-success btn-sm' %>
+                <% else %>
+                  <span style="color:green">戻す</span>
+                <% end %>
               </div>
             </div>
           <% end %>
